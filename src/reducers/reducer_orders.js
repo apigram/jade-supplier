@@ -1,6 +1,6 @@
 import { FETCH_ORDERS, ADD_ORDER, DELETE_ORDER, SAVE_ORDER } from "../actions";
 
-export default function (state = null, action) {
+export default function (state = [], action) {
     switch (action.type){
         case FETCH_ORDERS:
             return action.payload.data.orders;

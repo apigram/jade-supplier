@@ -1,10 +1,15 @@
 import React, {Component} from 'react';
-import {fetchCompanies, fetchCompany} from '../actions';
+import {fetchCompanies, fetchCompany, deleteCompany} from '../actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import ItemSearch from './item_search_bar'
+import CompanySearch from './company_search_bar'
 
 class CompanyList extends Component {
+    constructor(props) {
+        super(props);
+        this.props.fetchCompanies();
+    }
+
     renderList() {
         return this.props.items.map((company) => {
             let listClass = 'list-group-item list-group-item-action';
@@ -18,7 +23,7 @@ class CompanyList extends Component {
                             {company.label}
                         </div>
                         <div className="col-sm-2">
-                            <button type="button" className="btn btn-danger" onClick={() => {this.removeCompany(company.uri)}}>Delete</button>
+                            <button type="button" className="btn btn-danger" onClick={() => {this.props.deleteCompany(company.uri)}}>Delete</button>
                         </div>
                     </div>
                 </li>
@@ -30,7 +35,7 @@ class CompanyList extends Component {
         return (
             <div className="card bg-light text-dark">
                 <h2 className="card-header">Companies</h2>
-                <ItemSearch/>
+                <CompanySearch/>
                 <ul className="list-group list-group-flush">
                     {this.renderList()}
                 </ul>
@@ -47,7 +52,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({fetchCompanies, fetchCompany}, dispatch);
+    return bindActionCreators({fetchCompanies, fetchCompany, deleteCompany}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CompanyList);

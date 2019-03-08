@@ -89,7 +89,7 @@ class ItemDetail extends Component {
         return (
             <div className="card text-white bg-info">
                 <div className="card-body">
-                    <p>Select an item to view details.</p>
+                    <p>Select an order to view details.</p>
                 </div>
             </div>
         );

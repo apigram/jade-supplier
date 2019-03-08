@@ -30,7 +30,7 @@ class OrderSearch extends Component {
                                value={this.state.criteria}
                                onChange={this.handleChange}
                                className="form-control"
-                               placeholder="Search for a order..."/>
+                               placeholder="Search for an order..."/>
                     </div>
                 </form>
             </div>

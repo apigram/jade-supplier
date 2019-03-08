@@ -1,6 +1,6 @@
 import { FETCH_ITEMS, ADD_ITEM, DELETE_ITEM, SAVE_ITEM } from "../actions";
 
-export default function (state = null, action) {
+export default function (state = [], action) {
     switch (action.type){
         case FETCH_ITEMS:
             return action.payload.data.items;

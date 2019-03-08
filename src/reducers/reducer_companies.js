@@ -1,6 +1,6 @@
 import { FETCH_COMPANIES, ADD_COMPANY, DELETE_COMPANY, SAVE_COMPANY } from "../actions";
 
-export default function (state = null, action) {
+export default function (state = [], action) {
     switch (action.type){
         case FETCH_COMPANIES:
             return action.payload.data.companies;

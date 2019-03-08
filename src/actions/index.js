@@ -20,6 +20,8 @@ export const ADD_COMPANY = 'ADD_COMPANY';
 export const SAVE_COMPANY = 'SAVE_COMPANY';
 export const DELETE_COMPANY = 'DELETE_COMPANY';
 
+export const LOGIN = 'LOGIN';
+
 export let AUTH_HEADER = {
     headers: {
         Authorization: ''
@@ -27,7 +29,7 @@ export let AUTH_HEADER = {
 };
 
 export function fetchItems(criteria = null) {
-    let url = `${JADE_SERVICE_URL}/api/item`;
+    let url = `${JADE_SERVICE_URL}/item/`;
     if (criteria !== null) {
         url = `${url}?name=${criteria}`
     }
@@ -42,7 +44,7 @@ export function fetchItems(criteria = null) {
 
 export function fetchItem(item) {
     const url = `${JADE_SERVICE_URL}${item}`;
-
+    
     const request = axios.get(url, AUTH_HEADER);
 
     return {
@@ -52,11 +54,11 @@ export function fetchItem(item) {
 }
 
 export function fetchOrders(criteria = null) {
-    let url = `${JADE_SERVICE_URL}/api/order`;
+    let url = `${JADE_SERVICE_URL}/order/`;
     if (criteria !== null) {
         url = `${url}?name=${criteria}`
     }
-
+    
     const request = axios.get(url, AUTH_HEADER);
 
     return {
@@ -67,7 +69,7 @@ export function fetchOrders(criteria = null) {
 
 export function fetchOrder(order) {
     const url = `${JADE_SERVICE_URL}${order}`;
-
+    
     const request = axios.get(url, AUTH_HEADER);
 
     return {
@@ -77,7 +79,7 @@ export function fetchOrder(order) {
 }
 
 export function fetchCompanies(criteria = null) {
-    let url = `${JADE_SERVICE_URL}/api/company`;
+    let url = `${JADE_SERVICE_URL}/client/`;
     if (criteria !== null) {
         url = `${url}?name=${criteria}`
     }
@@ -92,7 +94,7 @@ export function fetchCompanies(criteria = null) {
 
 export function fetchCompany(company) {
     const url = `${JADE_SERVICE_URL}${company}`;
-
+    
     const request = axios.get(url, AUTH_HEADER);
 
     return {
@@ -102,7 +104,7 @@ export function fetchCompany(company) {
 }
 
 export function addItem(item) {
-    const url = `${JADE_SERVICE_URL}/api/item`;
+    const url = `${JADE_SERVICE_URL}/item/`;
     const request = axios.post(url, item, AUTH_HEADER);
 
     return {
@@ -112,7 +114,7 @@ export function addItem(item) {
 }
 
 export function addOrder(order) {
-    const url = `${JADE_SERVICE_URL}/api/order`;
+    const url = `${JADE_SERVICE_URL}/order/`;
     const request = axios.post(url, order, AUTH_HEADER);
 
     return {
@@ -122,7 +124,7 @@ export function addOrder(order) {
 }
 
 export function addCompany(company) {
-    const url = `${JADE_SERVICE_URL}/api/company`;
+    const url = `${JADE_SERVICE_URL}/client/`;
     const request = axios.post(url, company, AUTH_HEADER);
 
     return {
@@ -189,4 +191,19 @@ export function deleteCompany(company_uri) {
         type: DELETE_COMPANY,
         payload: request
     };
+}
+
+export function login(user, password) {
+    const url = `${JADE_SERVICE_URL}/api-token-auth/`;
+
+    const request = axios.post(url, {
+                username: user,
+                password
+            }
+    );
+
+    return {
+        type: LOGIN,
+        payload: request
+    }
 }

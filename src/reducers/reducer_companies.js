@@ -3,7 +3,7 @@ import { FETCH_COMPANIES, ADD_COMPANY, DELETE_COMPANY, SAVE_COMPANY } from "../a
 export default function (state = [], action) {
     switch (action.type){
         case FETCH_COMPANIES:
-            return action.payload.data.companies;
+            return action.payload.data;
         case ADD_COMPANY:
             return [action.payload.data.company, ...state];
         case SAVE_COMPANY:

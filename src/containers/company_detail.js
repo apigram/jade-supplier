@@ -8,7 +8,7 @@ class CompanyDetail extends Component {
         super(props);
 
         this.state = {
-            uri: '',
+            url: '',
             total_quantity: '',
             current_quantity: '',
         };
@@ -17,8 +17,8 @@ class CompanyDetail extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.activeCompany.uri !== prevState.uri) {
-            this.setState({uri: this.props.activeCompany.uri});
+        if (this.props.activeCompany.url !== prevState.url) {
+            this.setState({url: this.props.activeCompany.url});
             if (this.props.activeCompany.total_quantity !== prevState.total_quantity && this.state.total_quantity === '') {
                 this.setState({total_quantity: this.props.activeCompany.total_quantity})
             }
@@ -61,7 +61,7 @@ class CompanyDetail extends Component {
         if (this.props.activeCompany && this.state) {
             return (
                 <div className="card text-white bg-info">
-                    <h2 className="card-header">{this.props.activeItem.name}</h2>
+                    <h2 className="card-header">{this.props.activeCompany.name}</h2>
                     <div className="card-body">
                         <form onSubmit={this.handleSubmit}>
                             <div className="form-group">

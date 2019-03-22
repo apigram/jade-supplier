@@ -13,17 +13,18 @@ class OrderList extends Component {
     renderList() {
         return this.props.orders.map((order) => {
             let listClass = 'list-group-item list-group-item-action';
-            if (this.props.activeOrder !== null && order.uri === this.props.activeOrder.uri) {
+            if (this.props.activeOrder !== null && order.url === this.props.activeOrder.url) {
                 listClass = listClass + ' active';
             }
+            let dateString = new Date(order.received_date).toDateString();
             return (
-                <li key={order.uri} className={listClass}>
+                <li key={order.url} className={listClass}>
                     <div className="row">
-                        <div className="col-sm-10" onClick={() => {this.props.fetchOrder(order.uri)}}>
-                            {order.label}
+                        <div className="col-sm-10" onClick={() => {this.props.fetchOrder(order.url)}}>
+                            {dateString}
                         </div>
                         <div className="col-sm-2">
-                            <button type="button" className="btn btn-danger" onClick={() => {this.props.deleteOrder(order.uri)}}>Delete</button>
+                            <button type="button" className="btn btn-danger" onClick={() => {this.props.deleteOrder(order.url)}}>Delete</button>
                         </div>
                     </div>
                 </li>
@@ -32,15 +33,25 @@ class OrderList extends Component {
     }
 
     render() {
-        return (
-            <div className="card bg-light text-dark">
-                <h2 className="card-header">Orders</h2>
-                <OrderSearch/>
-                <ul className="list-group list-group-flush">
-                    {this.renderList()}
-                </ul>
-            </div>
-        );
+        if (this.props.orders !== null) {
+            return (
+                <div className="card bg-light text-dark">
+                    <h2 className="card-header">Orders</h2>
+                    <OrderSearch/>
+                    <ul className="list-group list-group-flush">
+                        {this.renderList()}
+                    </ul>
+                </div>
+            );
+        } else {
+            return (
+                <div className="card bg-light text-dark">
+                    <h2 className="card-header">Orders</h2>
+                    <OrderSearch/>
+                    <p>Loading Orders...</p>
+                </div>
+            )
+        }
     }
 }
 

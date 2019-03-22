@@ -68,17 +68,17 @@ class ItemList extends Component {
     renderList() {
         return this.props.items.map((item) => {
             let listClass = 'list-group-item list-group-item-action';
-            if (this.props.activeItem !== null && item.uri === this.props.activeItem.uri) {
+            if (this.props.activeItem !== null && item.url === this.props.activeItem.url) {
                 listClass = listClass + ' active';
             }
             return (
-                <li key={item.uri} className={listClass}>
+                <li key={item.url} className={listClass}>
                     <div className="row">
-                        <div className="col-sm-10" onClick={() => {this.props.fetchItem(item.uri)}}>
+                        <div className="col-sm-10" onClick={() => {this.props.fetchItem(item.url)}}>
                             {item.label}
                         </div>
                         <div className="col-sm-2">
-                            <button type="button" className="btn btn-danger" onClick={() => {this.props.deleteItem(item.uri)}}>Delete</button>
+                            <button type="button" className="btn btn-danger" onClick={() => {this.props.deleteItem(item.url)}}>Delete</button>
                         </div>
                     </div>
                 </li>
@@ -87,47 +87,88 @@ class ItemList extends Component {
     }
 
     render() {
-        return (
-            <div className="card bg-light text-dark">
-                <h2 className="card-header">Items</h2>
-                <ItemSearch/>
-                <ul className="list-group list-group-flush">
-                    {this.renderList()}
-                </ul>
-                <div className="card-link">
-                    <a href="javascript:void(0)" onClick={this.openModal}>Add a new item</a>
-                    <Modal
-                        isOpen={this.state.modalIsOpen}
-                        onRequestClose={this.closeModal}
-                        style={customStyles}
-                        contentLabel="Add Item">
-                        <div className="card bg-light text-dark">
-                            <div className="card-header">
-                                <h2 ref={subtitle => this.subtitle = subtitle}>Add Meal</h2>
+        if (this.props.items !== null) {
+            return (
+                <div className="card bg-light text-dark">
+                    <h2 className="card-header">Items</h2>
+                    <ItemSearch/>
+                    <ul className="list-group list-group-flush">
+                        {this.renderList()}
+                    </ul>
+                    <div className="card-link">
+                        <a href="javascript:void(0)" onClick={this.openModal}>Add a new item</a>
+                        <Modal
+                            isOpen={this.state.modalIsOpen}
+                            onRequestClose={this.closeModal}
+                            style={customStyles}
+                            contentLabel="Add Item">
+                            <div className="card bg-light text-dark">
+                                <div className="card-header">
+                                    <h2 ref={subtitle => this.subtitle = subtitle}>Add Meal</h2>
+                                </div>
+                                <div className="card-body">
+                                    <form onSubmit={this.handleSubmit}>
+                                        <div className="form-group">
+                                            <label htmlFor="item_label">Label:</label>
+                                            <input name="item_label" type="text" onChange={this.handleChange}
+                                                   value={this.state.item_label} className="form-control"/>
+                                            <label htmlFor="item_quantity">Quantity:</label>
+                                            <input name="item_quantity" type="text" onChange={this.handleChange}
+                                                   value={this.state.item_quantity} className="form-control"/>
+                                        </div>
+                                        <div className="btn-group">
+                                            <button type="submit" className="btn btn-primary">Create</button>
+                                            <button type="button" className="btn btn-danger"
+                                                    onClick={this.closeModal}>Cancel
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
-                            <div className="card-body">
-                                <form onSubmit={this.handleSubmit}>
-                                    <div className="form-group">
-                                        <label htmlFor="item_label">Label:</label>
-                                        <input name="item_label" type="text" onChange={this.handleChange}
-                                               value={this.state.item_label} className="form-control"/>
-                                        <label htmlFor="item_quantity">Quantity:</label>
-                                        <input name="item_quantity" type="text" onChange={this.handleChange}
-                                               value={this.state.item_quantity} className="form-control"/>
-                                    </div>
-                                    <div className="btn-group">
-                                        <button type="submit" className="btn btn-primary">Create</button>
-                                        <button type="button" className="btn btn-danger"
-                                                onClick={this.closeModal}>Cancel
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </Modal>
+                        </Modal>
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        } else {
+            return (
+                <div className="card bg-light text-dark">
+                    <h2 className="card-header">Items</h2>
+                    <ItemSearch/>
+                    <div className="card-link">
+                        <a href="javascript:void(0)" onClick={this.openModal}>Add a new item</a>
+                        <Modal
+                            isOpen={this.state.modalIsOpen}
+                            onRequestClose={this.closeModal}
+                            style={customStyles}
+                            contentLabel="Add Item">
+                            <div className="card bg-light text-dark">
+                                <div className="card-header">
+                                    <h2 ref={subtitle => this.subtitle = subtitle}>Add Meal</h2>
+                                </div>
+                                <div className="card-body">
+                                    <form onSubmit={this.handleSubmit}>
+                                        <div className="form-group">
+                                            <label htmlFor="item_label">Label:</label>
+                                            <input name="item_label" type="text" onChange={this.handleChange}
+                                                   value={this.state.item_label} className="form-control"/>
+                                            <label htmlFor="item_quantity">Quantity:</label>
+                                            <input name="item_quantity" type="text" onChange={this.handleChange}
+                                                   value={this.state.item_quantity} className="form-control"/>
+                                        </div>
+                                        <div className="btn-group">
+                                            <button type="submit" className="btn btn-primary">Create</button>
+                                            <button type="button" className="btn btn-danger"
+                                                    onClick={this.closeModal}>Cancel
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </Modal>
+                    </div>
+                </div>
+            )
+        }
     }
 }
 

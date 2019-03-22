@@ -43,7 +43,7 @@ export function fetchItems(criteria = null) {
 }
 
 export function fetchItem(item) {
-    const url = `${JADE_SERVICE_URL}${item}`;
+    const url = `${item}`;
     
     const request = axios.get(url, AUTH_HEADER);
 
@@ -68,7 +68,7 @@ export function fetchOrders(criteria = null) {
 }
 
 export function fetchOrder(order) {
-    const url = `${JADE_SERVICE_URL}${order}`;
+    const url = `${order}`;
     
     const request = axios.get(url, AUTH_HEADER);
 
@@ -93,7 +93,7 @@ export function fetchCompanies(criteria = null) {
 }
 
 export function fetchCompany(company) {
-    const url = `${JADE_SERVICE_URL}${company}`;
+    const url = `${company}`;
     
     const request = axios.get(url, AUTH_HEADER);
 
@@ -134,7 +134,7 @@ export function addCompany(company) {
 }
 
 export function saveItem(item_uri, item_data) {
-    const url = `${JADE_SERVICE_URL}${item_uri}`;
+    const url = `${item_uri}`;
     const request = axios.put(url, item_data, AUTH_HEADER);
 
     return {
@@ -144,7 +144,7 @@ export function saveItem(item_uri, item_data) {
 }
 
 export function saveOrder(order_uri, order_data) {
-    const url = `${JADE_SERVICE_URL}${order_uri}`;
+    const url = `${order_uri}`;
     const request = axios.patch(url, order_data, AUTH_HEADER); // Using PATCH here as we do not want to overwrite all data.
 
     return {
@@ -154,7 +154,7 @@ export function saveOrder(order_uri, order_data) {
 }
 
 export function saveCompany(company_uri, company_data) {
-    const url = `${JADE_SERVICE_URL}${company_uri}`;
+    const url = `${company_uri}`;
     const request = axios.put(url, company_data, AUTH_HEADER);
 
     return {
@@ -164,7 +164,7 @@ export function saveCompany(company_uri, company_data) {
 }
 
 export function deleteItem(item_uri) {
-    const url = `${JADE_SERVICE_URL}${item_uri}`;
+    const url = `${item_uri}`;
     const request = axios.delete(url, AUTH_HEADER);
 
     return {
@@ -174,7 +174,7 @@ export function deleteItem(item_uri) {
 }
 
 export function deleteOrder(order_uri) {
-    const url = `${JADE_SERVICE_URL}${order_uri}`;
+    const url = `${order_uri}`;
     const request = axios.delete(url, AUTH_HEADER);
 
     return {
@@ -184,7 +184,7 @@ export function deleteOrder(order_uri) {
 }
 
 export function deleteCompany(company_uri) {
-    const url = `${JADE_SERVICE_URL}${company_uri}`;
+    const url = `${company_uri}`;
     const request = axios.delete(url, AUTH_HEADER);
 
     return {

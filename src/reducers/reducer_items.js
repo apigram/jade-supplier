@@ -3,7 +3,7 @@ import { FETCH_ITEMS, ADD_ITEM, DELETE_ITEM, SAVE_ITEM } from "../actions";
 export default function (state = [], action) {
     switch (action.type){
         case FETCH_ITEMS:
-            return action.payload.data.items;
+            return action.payload.data;
         case ADD_ITEM:
             return [action.payload.data.item, ...state];
         case SAVE_ITEM:

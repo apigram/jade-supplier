@@ -23,7 +23,7 @@ export default class OrderItem extends Component {
         return (
             <tr key={this.state.url}>
                 <td>
-                    {this.state.label}
+                    {this.state.label !== null ? this.state.label : 'Loading...'}
                 </td>
                 <td>
                     {this.state.quantity}

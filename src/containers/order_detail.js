@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {AUTH_HEADER, saveOrder} from "../actions";
+import {saveOrder} from "../actions";
 import {bindActionCreators} from "redux";
 import OrderItem from "../components/order_item";
-import axios from "axios";
 
 class OrderDetail extends Component {
     constructor(props) {
@@ -11,38 +10,26 @@ class OrderDetail extends Component {
 
         this.state = {
             url: '',
-            total_quantity: '',
-            current_quantity: '',
+            scheduled_deliver_date: '',
+            //current_quantity: '',
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    /*componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.activeOrder.url !== prevState.url) {
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.activeOrder !== null && this.props.activeOrder.url !== prevState.url) {
             this.setState({url: this.props.activeOrder.url});
-            if (this.props.activeOrder.total_quantity !== prevState.total_quantity && this.state.total_quantity === '') {
-                this.setState({total_quantity: this.props.activeOrder.total_quantity})
-            }
-            if (this.props.activeOrder.current_quantity !== prevState.current_quantity && this.state.current_quantity === '') {
-                this.setState({current_quantity: this.props.activeOrder.current_quantity})
-            }
-            if (this.props.activeOrder.time_of_day !== prevState.time_of_day && this.state.time_of_day === '') {
-                this.setState({time_of_day: this.props.activeOrder.time_of_day})
+            if (this.props.activeOrder.scheduled_deliver_date !== prevState.scheduled_deliver_date && this.state.scheduled_deliver_date === '') {
+                this.setState({scheduled_deliver_date: this.props.activeOrder.scheduled_deliver_date})
             }
         }
-    }*/
+    }
 
     handleChange(event) {
         switch (event.target.name) {
-            case 'total_quantity':
-                this.setState({total_quantity: event.target.value});
-                break;
-            case 'current_quantity':
-                this.setState({current_quantity: event.target.value});
-                break;
-            case 'time_of_day':
-                this.setState({time_of_day: event.target.value});
+            case 'scheduled_deliver_date':
+                this.setState({scheduled_deliver_date: event.target.value});
                 break;
             default:
                 break;
@@ -79,7 +66,6 @@ class OrderDetail extends Component {
     render() {
         if (this.props.activeOrder && this.state) {
             let received_date = new Date(this.props.activeOrder.received_date).toDateString();
-            let scheduled_date = this.props.activeOrder.scheduled_deliver_date !== null ? new Date(this.props.activeOrder.scheduled_deliver_date).toDateString() : 'Not scheduled';
             let delivered_date = this.props.activeOrder.delivered_date !== null ? new Date(this.props.activeOrder.delivered_date).toDateString() : 'Pending';
             return (
                 <div className="card text-white bg-info">
@@ -87,7 +73,8 @@ class OrderDetail extends Component {
                     <div className="card-body">
                         Received date: {received_date}
                         <br/>
-                        Scheduled delivery date: {scheduled_date}
+                        <label htmlFor="scheduled_deliver_date">Scheduled Delivery Date:</label>
+                        <input name="scheduled_deliver_date" type="date" value={this.state.scheduled_deliver_date} onChange={this.handleChange} className="form-control"/>
                         <br/>
                         Delivered on: {delivered_date}
                         <br/>

@@ -9,8 +9,9 @@ class CompanyDetail extends Component {
 
         this.state = {
             url: '',
-            total_quantity: '',
-            current_quantity: '',
+            name: '',
+            business_number: '',
+            type: '',
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -19,28 +20,28 @@ class CompanyDetail extends Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.activeCompany.url !== prevState.url) {
             this.setState({url: this.props.activeCompany.url});
-            if (this.props.activeCompany.total_quantity !== prevState.total_quantity && this.state.total_quantity === '') {
-                this.setState({total_quantity: this.props.activeCompany.total_quantity})
+            if (this.props.activeCompany.name !== prevState.name&& this.state.name === '') {
+                this.setState({name: this.props.activeCompany.name})
             }
-            if (this.props.activeCompany.current_quantity !== prevState.current_quantity && this.state.current_quantity === '') {
-                this.setState({current_quantity: this.props.activeCompany.current_quantity})
+            if (this.props.activeCompany.business_number !== prevState.business_number && this.state.business_number === '') {
+                this.setState({business_number: this.props.activeCompany.business_number})
             }
-            if (this.props.activeCompany.time_of_day !== prevState.time_of_day && this.state.time_of_day === '') {
-                this.setState({time_of_day: this.props.activeCompany.time_of_day})
+            if (this.props.activeCompany.type!== prevState.type && this.state.type === '') {
+                this.setState({type: this.props.activeCompany.type})
             }
         }
     }
 
     handleChange(event) {
         switch (event.target.name) {
-            case 'total_quantity':
-                this.setState({total_quantity: event.target.value});
+            case 'name':
+                this.setState({name: event.target.value});
                 break;
-            case 'current_quantity':
-                this.setState({current_quantity: event.target.value});
+            case 'business_number':
+                this.setState({business_number: event.target.value});
                 break;
-            case 'time_of_day':
-                this.setState({time_of_day: event.target.value});
+            case 'type':
+                this.setState({type: event.target.value});
                 break;
             default:
                 break;
@@ -50,9 +51,9 @@ class CompanyDetail extends Component {
     handleSubmit(event) {
         event.preventDefault();
         let companyData = {
-            total_quantity: this.state.total_quantity,
-            current_quantity: this.state.current_quantity,
-            time_of_day: this.state.time_of_day
+            name: this.state.name,
+            business_number: this.state.business_number,
+            type: this.state.type
         };
         this.props.saveCompany(this.props.activeCompany.uri, companyData);
     }
@@ -65,19 +66,21 @@ class CompanyDetail extends Component {
                     <div className="card-body">
                         <form onSubmit={this.handleSubmit}>
                             <div className="form-group">
-                                <label htmlFor="label">Label:</label>
-                                <input name="label" type="text" className="form-control"
-                                       value={this.state.label} onChange={this.handleChange}/>
+                                <label htmlFor="name">Name:</label>
+                                <input name="name" type="text" className="form-control"
+                                       value={this.state.name} onChange={this.handleChange}/>
                             </div>
                             <div className="form-group">
-                                <label htmlFor="total_quantity">Total Quantity:</label>
-                                <input name="total_quantity" type="text" className="form-control"
-                                       value={this.state.total_quantity} onChange={this.handleChange}/>
+                                <label htmlFor="business_number">ABN:</label>
+                                <input name="business_number" type="text" className="form-control"
+                                       value={this.state.business_number} onChange={this.handleChange}/>
                             </div>
                             <div className="form-group">
-                                <label htmlFor="current_quantity">Current Quantity:</label>
-                                <input name="current_quantity" type="text" className="form-control"
-                                       value={this.state.current_quantity} onChange={this.handleChange}/>
+                                <label htmlFor="type">Current Quantity:</label>
+                                <select name="type" onChange={this.handleChange} value={this.state.type} className="form-control">
+                                    <option value="CLIENT">Client</option>
+                                    <option value="SUPPLIER">Supplier</option>
+                                </select>
                             </div>
                             <button className="btn btn-primary" type="submit">Save</button>
                         </form>

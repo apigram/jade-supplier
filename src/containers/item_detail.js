@@ -62,7 +62,7 @@ class ItemDetail extends Component {
     renderOrders() {
         return this.props.activeItem.orders.map((order) => {
             return (
-                <ItemOrder order={order}/>
+                <ItemOrder key={order.url} order={order}/>
             )
         })
     }

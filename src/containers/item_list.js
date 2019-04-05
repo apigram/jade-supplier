@@ -86,6 +86,43 @@ class ItemList extends Component {
         })
     }
 
+    renderAddLink() {
+        return (
+            <div className="card-link">
+                <a href="javascript:void(0)" onClick={this.openModal}>Add a new item</a>
+                <Modal
+                    isOpen={this.state.modalIsOpen}
+                    onRequestClose={this.closeModal}
+                    style={customStyles}
+                    contentLabel="Add Item">
+                    <div className="card bg-light text-dark">
+                        <div className="card-header">
+                            <h2 ref={subtitle => this.subtitle = subtitle}>Add Item</h2>
+                        </div>
+                        <div className="card-body">
+                            <form onSubmit={this.handleSubmit}>
+                                <div className="form-group">
+                                    <label htmlFor="item_label">Label:</label>
+                                    <input name="item_label" type="text" onChange={this.handleChange}
+                                           value={this.state.item_label} className="form-control"/>
+                                    <label htmlFor="item_quantity">Quantity:</label>
+                                    <input name="item_quantity" type="text" onChange={this.handleChange}
+                                           value={this.state.item_quantity} className="form-control"/>
+                                </div>
+                                <div className="btn-group">
+                                    <button type="submit" className="btn btn-primary">Create</button>
+                                    <button type="button" className="btn btn-danger"
+                                            onClick={this.closeModal}>Cancel
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </Modal>
+            </div>
+        )
+    }
+
     render() {
         if (this.props.items !== null) {
             return (
@@ -95,38 +132,7 @@ class ItemList extends Component {
                     <ul className="list-group list-group-flush">
                         {this.renderList()}
                     </ul>
-                    <div className="card-link">
-                        <a href="javascript:void(0)" onClick={this.openModal}>Add a new item</a>
-                        <Modal
-                            isOpen={this.state.modalIsOpen}
-                            onRequestClose={this.closeModal}
-                            style={customStyles}
-                            contentLabel="Add Item">
-                            <div className="card bg-light text-dark">
-                                <div className="card-header">
-                                    <h2 ref={subtitle => this.subtitle = subtitle}>Add Meal</h2>
-                                </div>
-                                <div className="card-body">
-                                    <form onSubmit={this.handleSubmit}>
-                                        <div className="form-group">
-                                            <label htmlFor="item_label">Label:</label>
-                                            <input name="item_label" type="text" onChange={this.handleChange}
-                                                   value={this.state.item_label} className="form-control"/>
-                                            <label htmlFor="item_quantity">Quantity:</label>
-                                            <input name="item_quantity" type="text" onChange={this.handleChange}
-                                                   value={this.state.item_quantity} className="form-control"/>
-                                        </div>
-                                        <div className="btn-group">
-                                            <button type="submit" className="btn btn-primary">Create</button>
-                                            <button type="button" className="btn btn-danger"
-                                                    onClick={this.closeModal}>Cancel
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </Modal>
-                    </div>
+                    {this.renderAddLink()}
                 </div>
             );
         } else {
@@ -134,38 +140,7 @@ class ItemList extends Component {
                 <div className="card bg-light text-dark">
                     <h2 className="card-header">Items</h2>
                     <ItemSearch/>
-                    <div className="card-link">
-                        <a href="javascript:void(0)" onClick={this.openModal}>Add a new item</a>
-                        <Modal
-                            isOpen={this.state.modalIsOpen}
-                            onRequestClose={this.closeModal}
-                            style={customStyles}
-                            contentLabel="Add Item">
-                            <div className="card bg-light text-dark">
-                                <div className="card-header">
-                                    <h2 ref={subtitle => this.subtitle = subtitle}>Add Meal</h2>
-                                </div>
-                                <div className="card-body">
-                                    <form onSubmit={this.handleSubmit}>
-                                        <div className="form-group">
-                                            <label htmlFor="item_label">Label:</label>
-                                            <input name="item_label" type="text" onChange={this.handleChange}
-                                                   value={this.state.item_label} className="form-control"/>
-                                            <label htmlFor="item_quantity">Quantity:</label>
-                                            <input name="item_quantity" type="text" onChange={this.handleChange}
-                                                   value={this.state.item_quantity} className="form-control"/>
-                                        </div>
-                                        <div className="btn-group">
-                                            <button type="submit" className="btn btn-primary">Create</button>
-                                            <button type="button" className="btn btn-danger"
-                                                    onClick={this.closeModal}>Cancel
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </Modal>
-                    </div>
+                    {this.renderAddLink()}
                 </div>
             )
         }

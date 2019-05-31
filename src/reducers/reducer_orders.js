@@ -8,7 +8,7 @@ export default function (state = [], action) {
             return [action.payload.data.order, ...state];
         case SAVE_ORDER:
             return state.map((order) => {
-                if (order.uri === action.payload.data.order.uri) {
+                if (order.url === action.payload.data.order.url) {
                     return action.payload.data.order;
                 } else {
                     return order;
@@ -16,7 +16,7 @@ export default function (state = [], action) {
             });
         case DELETE_ORDER:
             return state.filter((order) => {
-                return order.uri !== `/api/order/${action.payload.data.id}`;
+                return order.url !== `/api/order/${action.payload.data.id}`;
             });
         default:
             return state;

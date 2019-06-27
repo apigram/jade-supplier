@@ -10,7 +10,7 @@ class OrderDetail extends Component {
 
         this.state = {
             url: '',
-            scheduled_deliver_date: '',
+            scheduled_deliver_date: "",
             //current_quantity: '',
         };
         this.handleChange = this.handleChange.bind(this);
@@ -27,13 +27,13 @@ class OrderDetail extends Component {
     }
 
     handleChange(event) {
-        switch (event.target.name) {
-            case 'scheduled_deliver_date':
+        //switch (event.target.name) {
+            //case 'scheduled_deliver_date':
                 this.setState({scheduled_deliver_date: event.target.value});
-                break;
-            default:
-                break;
-        }
+                //break;
+            //default:
+                //break;
+        //}
     }
 
     handleSubmit(event) {
@@ -58,7 +58,7 @@ class OrderDetail extends Component {
 
         return this.props.activeOrder.items.map((item) => {
             return (
-                <OrderItem item={item}/>
+                <OrderItem key={item.url} item={item}/>
             )
         })
     }

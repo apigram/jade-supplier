@@ -7,6 +7,7 @@ export const FETCH_ORDERS = 'FETCH_ORDERS';
 export const FETCH_ORDER = 'FETCH_ORDER';
 export const FETCH_COMPANIES = 'FETCH_COMPANIES';
 export const FETCH_COMPANY = 'FETCH_COMPANY';
+export const FETCH_SUPPLIERS = 'FETCH_SUPPLIERS';
 
 export const ADD_ITEM = 'ADD_ITEM';
 export const SAVE_ITEM = 'SAVE_ITEM';
@@ -79,7 +80,7 @@ export function fetchOrder(order) {
 }
 
 export function fetchCompanies(criteria = null) {
-    let url = `${JADE_SERVICE_URL}/client/`;
+    let url = `${JADE_SERVICE_URL}/company/`;
     if (criteria !== null) {
         url = `${url}?name=${criteria}`
     }
@@ -88,6 +89,17 @@ export function fetchCompanies(criteria = null) {
 
     return {
         type: FETCH_COMPANIES,
+        payload: request
+    }
+}
+
+export function fetchSuppliers() {
+    let url = `${JADE_SERVICE_URL}/supplier/`;
+
+    const request = axios.get(url, AUTH_HEADER);
+
+    return {
+        type: FETCH_SUPPLIERS,
         payload: request
     }
 }
@@ -124,7 +136,7 @@ export function addOrder(order) {
 }
 
 export function addCompany(company) {
-    const url = `${JADE_SERVICE_URL}/client/`;
+    const url = `${JADE_SERVICE_URL}/company/`;
     const request = axios.post(url, company, AUTH_HEADER);
 
     return {

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {fetchOrders, fetchOrder, addOrder, saveOrder, deleteOrder} from '../actions';
+import {fetchOrders, fetchOrder, fetchSuppliers, addOrder, saveOrder, deleteOrder} from '../actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import OrderSearch from './order_search_bar'
@@ -22,10 +22,11 @@ class OrderList extends Component {
     constructor(props) {
         super(props);
         this.props.fetchOrders();
+        this.props.fetchSuppliers();
         this.state = {
             modalIsOpen: false,
             delivery_date: '',
-            supplier: null,
+            supplier: "",
             items: []
         };
 
@@ -33,11 +34,12 @@ class OrderList extends Component {
         this.closeModal = this.closeModal.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleItemChange = this.handleItemChange.bind(this);
         this.addItem = this.addItem.bind(this);
     }
 
     addItem() {
-        let newItem = {pos: this.state.items.length, item: "", quantity: 0};
+        let newItem = {item: "", quantity: 0};
         this.setState({items: [...this.state.items, newItem]});
     }
 
@@ -70,9 +72,15 @@ class OrderList extends Component {
         switch (eventName) {
             case 'item':
                 newItemState[index].item = event.target.value;
+                newItemState[index].unit_price = this.props.items.filter((item) => {
+                    return item.url === newItemState[index].item
+                })[0].unit_price;
                 break;
             case 'quantity':
                 newItemState[index].quantity = event.target.value;
+                break;
+            case 'unit_price':
+                newItemState[index].unit_price = event.target.value;
                 break;
             default:
                 break;
@@ -86,7 +94,7 @@ class OrderList extends Component {
         let newOrder = {
             scheduled_deliver_date: this.state.scheduled_deliver_date,
             status: 'Order Received',
-            client: null,
+            client: this.props.activeUser.company,
             supplier: this.state.supplier,
             items: this.state.items
         };
@@ -158,6 +166,7 @@ class OrderList extends Component {
                                         <tr>
                                             <th>Item</th>
                                             <th>Quantity</th>
+                                            <th>Unit Price</th>
                                             <th/>
                                         </tr>
                                         </thead>
@@ -166,7 +175,7 @@ class OrderList extends Component {
                                         </tbody>
                                         <tfoot>
                                         <tr>
-                                            <td colSpan="3">
+                                            <td colSpan="4">
                                                 <a href="javascript:void(0)" onClick={this.addItem}>Add item to order</a>
                                             </td>
                                         </tr>
@@ -188,25 +197,29 @@ class OrderList extends Component {
     }
 
     renderItemForms() {
-        if (this.state.items)
-        return this.state.items.map((item) => {
-            return (
-                <tr key={item.pos}>
-                    <td>
-                        <select name={"item[" + item.pos + "]"} value={item.url} onChange={this.handleItemChange.bind(this)} className="form-control">
-                            <option value="">Select one...</option>
-                            {this.renderItemList()}
-                        </select>
-                    </td>
-                    <td>
-                        <input name={"quantity[" + item.pos + "]"} type="text" onChange={this.handleItemChange.bind(this)} value={item.quantity} className="form-control"/>
-                    </td>
-                    <td>
-                        <a href="javascript:void(0)" onClick={this.removeItem.bind(this, item)}>Remove</a>
-                    </td>
-                </tr>
-            );
-        });
+        if (this.state.items) {
+            return this.state.items.map((item, index) => {
+                return (
+                    <tr key={index}>
+                        <td>
+                            <select name={"item[" + index + "]"} value={this.state.items[index].url} onChange={this.handleItemChange} className="form-control">
+                                <option value="">Select one...</option>
+                                {this.renderItemList()}
+                            </select>
+                        </td>
+                        <td>
+                            <input name={"quantity[" + index + "]"} type="text" onChange={this.handleItemChange} value={this.state.items[index].quantity} className="form-control"/>
+                        </td>
+                        <td>
+                            <input name={"unit_price[" + index + "]"} type="text" onChange={this.handleItemChange} value={this.state.items[index].unit_price} className="form-control"/>
+                        </td>
+                        <td>
+                            <a href="javascript:void(0)" onClick={this.removeItem.bind(this, item)}>Remove</a>
+                        </td>
+                    </tr>
+                );
+            });
+        }
     }
 
     renderSupplierList() {
@@ -253,14 +266,14 @@ function mapStateToProps(state) {
     return {
         orders: state.orders,
         activeOrder: state.activeOrder,
-        suppliers: state.companies,
+        suppliers: state.suppliers,
         items: state.items,
         activeUser: state.activeUser
     }
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({fetchOrders, fetchOrder, addOrder, saveOrder, deleteOrder}, dispatch);
+    return bindActionCreators({fetchOrders, fetchOrder, fetchSuppliers, addOrder, saveOrder, deleteOrder}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(OrderList);

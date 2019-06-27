@@ -6,6 +6,7 @@ import ActiveItemReducer from './reducer_active_item';
 import CompaniesReducer from './reducer_companies';
 import ActiveCompanyReducer from './reducer_active_company';
 import AuthReducer from './reducer_auth';
+import SupplierReducer from './reducer_suppliers'
 
 const rootReducer = combineReducers({
     orders: OrdersReducer,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
     activeItem: ActiveItemReducer,
     companies: CompaniesReducer,
     activeCompany: ActiveCompanyReducer,
-    activeUser: AuthReducer
+    activeUser: AuthReducer,
+    suppliers: SupplierReducer
 });
 
 export default rootReducer;

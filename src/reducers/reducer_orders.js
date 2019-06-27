@@ -5,11 +5,11 @@ export default function (state = [], action) {
         case FETCH_ORDERS:
             return action.payload.data;
         case ADD_ORDER:
-            return [action.payload.data.order, ...state];
+            return [action.payload.data, ...state];
         case SAVE_ORDER:
             return state.map((order) => {
-                if (order.url === action.payload.data.order.url) {
-                    return action.payload.data.order;
+                if (order.url === action.payload.data.url) {
+                    return action.payload.data;
                 } else {
                     return order;
                 }

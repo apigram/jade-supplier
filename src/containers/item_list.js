@@ -16,7 +16,7 @@ const customStyles = {
     }
 };
 
-Modal.setAppElement('.container');
+Modal.setAppElement('#container');
 
 class ItemList extends Component {
 

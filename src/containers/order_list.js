@@ -16,7 +16,7 @@ const customStyles = {
     }
 };
 
-Modal.setAppElement('.container');
+Modal.setAppElement('#container');
 
 class OrderList extends Component {
     constructor(props) {
@@ -27,7 +27,8 @@ class OrderList extends Component {
             modalIsOpen: false,
             delivery_date: '',
             supplier: "",
-            items: []
+            items: [],
+            type: props.type
         };
 
         this.openModal = this.openModal.bind(this);
@@ -116,18 +117,33 @@ class OrderList extends Component {
                 listClass = listClass + ' active';
             }
             let dateString = new Date(order.received_date).toDateString();
-            return (
-                <li key={order.url} className={listClass}>
-                    <div className="row">
-                        <div className="col-sm-10" onClick={() => {this.props.fetchOrder(order.url)}}>
-                            {dateString}
+
+            if (order.supplier === this.props.activeUser.company && this.state.type === 'INCOMING') {
+                return (
+                    <li key={order.url} className={listClass}>
+                        <div className="row">
+                            <div className="col-sm-12" onClick={() => {this.props.fetchOrder(order.url)}}>
+                                {dateString}
+                            </div>
                         </div>
-                        <div className="col-sm-2">
-                            <button type="button" className="btn btn-danger" onClick={() => {this.props.deleteOrder(order.url)}}>Delete</button>
+                    </li>
+                )
+            } else if (order.client === this.props.activeUser.company && this.state.type === 'OUTGOING') {
+                return (
+                    <li key={order.url} className={listClass}>
+                        <div className="row">
+                            <div className="col-sm-9" onClick={() => {this.props.fetchOrder(order.url)}}>
+                                {dateString}
+                            </div>
+                            <div className="col-sm-3">
+                                <button type="button" className="btn btn-danger" onClick={() => {this.props.deleteOrder(order.url)}}>Delete</button>
+                            </div>
                         </div>
-                    </div>
-                </li>
-            )
+                    </li>
+                )
+            } else {
+                return null;
+            }
         })
     }
 
@@ -239,15 +255,16 @@ class OrderList extends Component {
     }
 
     render() {
+        const cardTitle = this.state.type === 'INCOMING' ? "Orders Received" : "Orders";
         if (this.props.orders !== null) {
             return (
                 <div className="card bg-light text-dark">
-                    <h2 className="card-header">Orders</h2>
+                    <h2 className="card-header">{cardTitle}</h2>
                     <OrderSearch/>
                     <ul className="list-group list-group-flush">
                         {this.renderList()}
                     </ul>
-                    {this.renderAddLink()}
+                    {this.state.type === 'OUTGOING' ? this.renderAddLink(): null}
                 </div>
             );
         } else {

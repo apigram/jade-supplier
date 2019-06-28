@@ -16,7 +16,8 @@ class App extends Component {
               <div className="App">
                   <h1>JADE - Supplier Interface</h1>
                   <div className="card-deck">
-                      <OrderList/>
+                      <OrderList type="INCOMING"/>
+                      <OrderList type="OUTGOING"/>
                       <OrderDetail/>
                   </div>
                   <br/>

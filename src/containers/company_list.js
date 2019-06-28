@@ -17,7 +17,7 @@ const customStyles = {
     }
 };
 
-Modal.setAppElement('.container');
+Modal.setAppElement('#container');
 
 
 class CompanyList extends Component {
@@ -50,7 +50,15 @@ class CompanyList extends Component {
         this.props.addCompany({
             name: this.state.name,
             business_number: this.state.business_number,
-            type: this.state.type
+            type: this.state.type,
+            contacts: [{
+                first_name: this.state.first_name,
+                last_name: this.state.last_name,
+                role: this.state.role,
+                phone: this.state.phone,
+                email: this.state.email,
+                address: this.state.address,
+            }]
         });
         this.closeModal();
     }
@@ -124,6 +132,35 @@ class CompanyList extends Component {
                                             <option value="CLIENT">Client</option>
                                             <option value="SUPPLIER">Supplier</option>
                                         </select>
+                                    </div>
+                                    <label htmlFor="first_name">Contact Name:</label>
+                                    <div className="form-group form-row">
+                                        <div className="col">
+                                            <input name="first_name" onChange={this.handleChange} value={this.state.first_name} type="text" className="form-control" placeholder="First Name"/>
+                                        </div>
+                                        <div className="col">
+                                            <input name="last_name" onChange={this.handleChange} value={this.state.last_name} type="text" className="form-control" placeholder="Last Name"/>
+                                        </div>
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="role">Role:</label>
+                                        <input name="role" type="text" onChange={this.handleChange}
+                                               value={this.state.role} className="form-control"/>
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="phone">Phone:</label>
+                                        <input name="phone" type="text" onChange={this.handleChange}
+                                               value={this.state.phone} className="form-control"/>
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="email">Email:</label>
+                                        <input name="email" type="email" onChange={this.handleChange}
+                                               value={this.state.email} className="form-control"/>
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="address">Address:</label>
+                                        <input name="address" type="text" onChange={this.handleChange}
+                                               value={this.state.address} className="form-control"/>
                                     </div>
                                 </div>
                                 <div className="btn-group">

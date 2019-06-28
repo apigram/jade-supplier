@@ -7,6 +7,7 @@ import CompaniesReducer from './reducer_companies';
 import ActiveCompanyReducer from './reducer_active_company';
 import AuthReducer from './reducer_auth';
 import SupplierReducer from './reducer_suppliers'
+import { reducer as formReducer } from 'redux-form'
 
 const rootReducer = combineReducers({
     orders: OrdersReducer,
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
     companies: CompaniesReducer,
     activeCompany: ActiveCompanyReducer,
     activeUser: AuthReducer,
-    suppliers: SupplierReducer
+    suppliers: SupplierReducer,
+    form: formReducer
 });
 
 export default rootReducer;

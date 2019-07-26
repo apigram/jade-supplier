@@ -122,6 +122,7 @@ class ItemDetail extends Component {
 function mapStateToProps(state) {
     return {
         activeItem: state.activeItem,
+        error: state.error
     }
 }
 

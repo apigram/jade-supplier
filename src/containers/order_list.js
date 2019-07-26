@@ -285,7 +285,8 @@ function mapStateToProps(state) {
         activeOrder: state.activeOrder,
         suppliers: state.suppliers,
         items: state.items,
-        activeUser: state.activeUser
+        activeUser: state.activeUser,
+        error: state.error
     }
 }
 

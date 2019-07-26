@@ -102,6 +102,7 @@ class CompanyDetail extends Component {
 function mapStateToProps(state) {
     return {
         activeCompany: state.activeCompany,
+        error: state.error
     }
 }
 

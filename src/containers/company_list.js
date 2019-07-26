@@ -205,6 +205,7 @@ function mapStateToProps(state) {
     return {
         companies: state.companies,
         activeCompany: state.activeCompany,
+        error: state.error
     }
 }
 

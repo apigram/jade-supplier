@@ -151,6 +151,7 @@ function mapStateToProps(state) {
     return {
         items: state.items,
         activeItem: state.activeItem,
+        error: state.error
     }
 }
 

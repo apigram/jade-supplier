@@ -135,7 +135,8 @@ class OrderDetail extends Component {
 function mapStateToProps(state) {
     return {
         activeOrder: state.activeOrder,
-        companies: state.companies
+        companies: state.companies,
+        error: state.error
     }
 }
 
